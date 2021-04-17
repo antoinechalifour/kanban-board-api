@@ -18,16 +18,15 @@ internal class BoardCreatedTest {
     @Test
     internal fun `creates a new board`() {
         // Arrange
-        val id = "new-board-id"
-        val name = "Board Name"
-        val command = CreateBoardCommand(id, name)
+        val command = CreateBoardCommand("new-board-id", "Board Name")
 
         // Act
         createBoard(command)
 
         // Assert
-        val board = boards.ofId(BoardId(id))
-        Assertions.assertThat(board.id).isEqualTo(BoardId(id))
-        Assertions.assertThat(board.name).isEqualTo(name)
+        val board = boards.ofId(BoardId("new-board-id"))
+        Assertions.assertThat(board.id).isEqualTo(BoardId("new-board-id"))
+        Assertions.assertThat(board.name).isEqualTo("Board Name")
+        Assertions.assertThat(board.columns).isEqualTo(emptyList<Column>())
     }
 }

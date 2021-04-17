@@ -1,3 +1,3 @@
 package dev.antoinechalifour.domain
 
-inline class BoardId(private val id: String)
+inline class BoardId(val id: String)
