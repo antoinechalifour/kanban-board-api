@@ -9,7 +9,7 @@ class InMemoryBoards : Boards {
 
     override fun ofId(boardId: BoardId) = database[boardId] ?: throw NoSuchElementException("Board \"$boardId\"")
     override fun save(board: Board) {
-        database[board.state().id] = board
+        database[board.snapshot().id.asBoardId()] = board
     }
-
 }
+

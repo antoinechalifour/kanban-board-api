@@ -1,7 +1,9 @@
 package dev.antoinechalifour.domain
 
+import dev.antoinechalifour.aBoard
 import dev.antoinechalifour.infrastructure.InMemoryBoards
 import dev.antoinechalifour.infrastructure.InMemoryTasks
+import dev.antoinechalifour.save
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

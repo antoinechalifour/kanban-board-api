@@ -20,15 +20,15 @@ internal class AddColumnToBoardTest {
         // Arrange
         val boardId = BoardId("board-1")
         boards.save(Board(boardId, "Board name"))
-        val command1 = AddColumnToBoardCommand(boardId.id, "column-1", "Column 1 name")
-        val command2 = AddColumnToBoardCommand(boardId.id, "column-2", "Column 2 name")
+        val command1 = AddColumnToBoardCommand("column-1", boardId.toString(), "Column 1 name")
+        val command2 = AddColumnToBoardCommand("column-2", boardId.toString(), "Column 2 name")
 
         // Act
         addColumnToBoard(command1)
         addColumnToBoard(command2)
 
         // Assert
-        val state = boards.ofId(boardId).state()
+        val state = boards.ofId(boardId).snapshot()
         Assertions.assertThat(state.columns)
             .usingRecursiveComparison()
             .isEqualTo(
@@ -42,7 +42,11 @@ internal class AddColumnToBoardTest {
     @Test
     internal fun `cannot add a column to a missing board`() {
         // Arrange
-        val command = AddColumnToBoardCommand("missing-board-id", "column-1", "Column 1 name")
+        val command = AddColumnToBoardCommand(
+            "column-1",
+            "missing-board-id",
+            "Column 1 name"
+        )
 
         // Act
         Assertions.assertThatThrownBy { addColumnToBoard(command) }

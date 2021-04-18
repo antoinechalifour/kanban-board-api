@@ -1,6 +1,7 @@
 package dev.antoinechalifour.domain
 
-data class AddColumnToBoardCommand (
+data class AddColumnToBoardCommand(
+    val id: String,
     val boardId: String,
-    val columnId: String,
-    val columnName: String)
+    val name: String
+)

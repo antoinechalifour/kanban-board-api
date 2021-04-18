@@ -1,5 +1,5 @@
 package dev.antoinechalifour.domain
 
-inline class BoardId(val id: String) {
+inline class BoardId(private val id: String) {
     override fun toString() = id
 }

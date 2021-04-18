@@ -7,8 +7,6 @@ import io.ktor.features.*
 import io.ktor.jackson.*
 import io.ktor.routing.*
 
-data class CreateBoardResponse(val id: String, val name: String)
-
 fun Application.configureRouting() {
     install(ContentNegotiation) {
         jackson()
