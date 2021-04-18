@@ -1,13 +1,17 @@
 package dev.antoinechalifour
 
-import io.ktor.server.engine.*
+import dev.antoinechalifour.plugins.configureHTTP
+import dev.antoinechalifour.plugins.configureKoin
+import dev.antoinechalifour.plugins.configureMonitoring
+import dev.antoinechalifour.plugins.configureRouting
+import io.ktor.application.*
 import io.ktor.server.netty.*
-import dev.antoinechalifour.plugins.*
 
-fun main() {
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
-        configureRouting()
-        configureHTTP()
-        configureMonitoring()
-    }.start(wait = true)
+fun main(args: Array<String>): Unit = EngineMain.main(args)
+
+fun Application.module() {
+    configureKoin()
+    configureRouting()
+    configureHTTP()
+    configureMonitoring()
 }

@@ -23,7 +23,7 @@ internal class AddTaskToBoardTest {
         // Arrange
         boards.save(aBoard().withId("board-1").withColumns("column-1", "column-2"))
 
-        val command = AddTaskCommand(
+        val command = AddTaskToBoardCommand(
             "board-1",
             "column-2",
             "task-1",
@@ -48,7 +48,7 @@ internal class AddTaskToBoardTest {
     @Test
     internal fun `cannot add task on missing board`() {
         // Arrange
-        val command = AddTaskCommand(
+        val command = AddTaskToBoardCommand(
             "missing-board-id",
             "column-2",
             "task-1",
@@ -65,7 +65,7 @@ internal class AddTaskToBoardTest {
         // Arrange
         boards.save(aBoard().withId("board-1"))
 
-        val command = AddTaskCommand(
+        val command = AddTaskToBoardCommand(
             "board-1",
             "missing-column-id",
             "task-1",

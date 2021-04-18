@@ -1,13 +1,20 @@
 package dev.antoinechalifour.plugins
 
-import io.ktor.routing.*
-import io.ktor.http.*
+import com.fasterxml.jackson.databind.SerializationFeature
+import dev.antoinechalifour.application.boardsEndpoints
 import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.request.*
+import io.ktor.features.*
+import io.ktor.jackson.*
+import io.ktor.routing.*
 
-fun Application.configureRouting() = routing {
-    get("/") {
-        call.respondText("Hello World!")
+data class CreateBoardResponse(val id: String, val name: String)
+
+fun Application.configureRouting() {
+    install(ContentNegotiation) {
+        jackson()
+    }
+
+    routing {
+        boardsEndpoints()
     }
 }
