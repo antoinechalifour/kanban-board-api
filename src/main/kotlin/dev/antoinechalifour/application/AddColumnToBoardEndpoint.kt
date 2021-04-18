@@ -1,5 +1,6 @@
 package dev.antoinechalifour.application
 
+import dev.antoinechalifour.application.view.BoardViews
 import dev.antoinechalifour.domain.AddColumnToBoard
 import dev.antoinechalifour.domain.AddColumnToBoardCommand
 import dev.antoinechalifour.domain.BoardId
@@ -13,17 +14,17 @@ import org.koin.ktor.ext.inject
 
 fun Route.addColumnToBoardEndpoint() {
     val addColumnToBoard by inject<AddColumnToBoard>()
-    val boards by inject<Boards>()
+    val boardViews by inject<BoardViews>()
 
     post("/v1/boards/columns") {
         val command = call.receive<AddColumnToBoardCommand>()
         addColumnToBoard(command)
 
         call.apply {
-            val board = boards.ofId(BoardId(command.boardId))
+            val boardId = BoardId(command.boardId)
 
             response.status(HttpStatusCode.Created)
-            respond(BoardResponse.of(board))
+            respond(boardViews.forBoard(boardId))
         }
     }
 }

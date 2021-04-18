@@ -1,8 +1,10 @@
 package dev.antoinechalifour.domain
 
 class Task(
-    val id: TaskId,
-    val boardId: BoardId,
-    val columnId: ColumnId,
-    val content: String
-)
+    private val id: TaskId,
+    private val boardId: BoardId,
+    private val columnId: ColumnId,
+    private val content: String
+) {
+    fun snapshot() = TaskSnapshot(id.toString(), content, boardId.toString(), columnId.toString())
+}

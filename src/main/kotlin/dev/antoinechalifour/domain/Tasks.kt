@@ -1,6 +1,7 @@
 package dev.antoinechalifour.domain
 
 interface Tasks {
-    fun ofBoard(boardId: BoardId): List<Task>
     fun save(task: Task)
+    fun ofId(taskId: TaskId): Task
+    fun ofBoardId(boardId: BoardId): List<Task>
 }

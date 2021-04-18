@@ -8,11 +8,14 @@ import dev.antoinechalifour.domain.Tasks
 class InMemoryTasks : Tasks {
     private val database = HashMap<TaskId, Task>()
 
-    override fun ofBoard(boardId: BoardId) = database
-        .filter { it.value.boardId == boardId }
-        .map { it.value }
-
     override fun save(task: Task) {
-        database[task.id] = task
+        database[task.snapshot().id.asTaskId()] = task
     }
+
+    override fun ofId(taskId: TaskId) = database[taskId] ?: throw NoSuchElementException("Task \"$taskId\"")
+
+    override fun ofBoardId(boardId: BoardId): List<Task> = database.values
+        .filter { it.snapshot().boardId == boardId.toString() }
 }
+
+

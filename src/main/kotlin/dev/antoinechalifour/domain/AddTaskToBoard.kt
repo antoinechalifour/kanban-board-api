@@ -7,8 +7,8 @@ class AddTaskToBoard(
     operator fun invoke(command: AddTaskToBoardCommand) = boards.ofId(BoardId(command.boardId)).run {
         val task = addTaskToColumn(
             ColumnId(command.columnId),
-            TaskId(command.taskId),
-            command.taskContent
+            TaskId(command.id),
+            command.content
         )
 
         tasks.save(task)

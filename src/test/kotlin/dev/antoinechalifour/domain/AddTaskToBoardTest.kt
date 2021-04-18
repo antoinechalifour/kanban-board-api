@@ -26,34 +26,26 @@ internal class AddTaskToBoardTest {
         boards.save(aBoard().withId("board-1").withColumns("column-1", "column-2"))
 
         val command = AddTaskToBoardCommand(
+            "task-1",
             "board-1",
             "column-2",
-            "task-1",
             "some content")
 
         // Act
         addTaskToBoard(command)
 
         // Assert
-        val tasks = tasks.ofBoard(BoardId("board-1"))
-        Assertions.assertThat(tasks).usingRecursiveComparison()
-            .isEqualTo(listOf(
-                Task(
-                    TaskId("task-1"),
-                    BoardId("board-1"),
-                    ColumnId("column-2"),
-                    "some content"
-                )
-            ))
+        val snapshot = tasks.ofId(TaskId("task-1")).snapshot()
+        Assertions.assertThat(snapshot.content).isEqualTo("some content")
     }
 
     @Test
     internal fun `cannot add task on missing board`() {
         // Arrange
         val command = AddTaskToBoardCommand(
+            "task-1",
             "missing-board-id",
             "column-2",
-            "task-1",
             "some content")
 
         // Act
@@ -68,9 +60,9 @@ internal class AddTaskToBoardTest {
         boards.save(aBoard().withId("board-1"))
 
         val command = AddTaskToBoardCommand(
+            "task-1",
             "board-1",
             "missing-column-id",
-            "task-1",
             "some content")
 
         // Act

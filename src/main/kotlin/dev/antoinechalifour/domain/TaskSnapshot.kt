@@ -1,8 +1,8 @@
 package dev.antoinechalifour.domain
 
-data class AddTaskToBoardCommand(
+data class TaskSnapshot(
     val id: String,
+    val content: String,
     val boardId: String,
-    val columnId: String,
-    val content: String
+    val columnId: String
 )

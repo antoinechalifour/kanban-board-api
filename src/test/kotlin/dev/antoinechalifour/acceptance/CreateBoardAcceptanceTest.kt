@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class CreateBoardAcceptanceTest : KoinTest {
+internal class CreateBoardAcceptanceTest : KoinTest {
     private val boards by inject<Boards>()
 
     @Test

@@ -24,9 +24,9 @@ internal class CreateBoardTest {
         createBoard(command)
 
         // Assert
-        val state = boards.ofId(BoardId("new-board-id")).snapshot()
-        Assertions.assertThat(state.id).isEqualTo("new-board-id")
-        Assertions.assertThat(state.name).isEqualTo("Board Name")
-        Assertions.assertThat(state.columns).isEqualTo(emptyList<Column>())
+        val snapshot = boards.ofId(BoardId("new-board-id")).snapshot()
+        Assertions.assertThat(snapshot.id).isEqualTo("new-board-id")
+        Assertions.assertThat(snapshot.name).isEqualTo("Board Name")
+        Assertions.assertThat(snapshot.columns).isEqualTo(emptyList<Column>())
     }
 }

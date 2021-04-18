@@ -28,8 +28,8 @@ internal class AddColumnToBoardTest {
         addColumnToBoard(command2)
 
         // Assert
-        val state = boards.ofId(boardId).snapshot()
-        Assertions.assertThat(state.columns)
+        val snapshot = boards.ofId(boardId).snapshot()
+        Assertions.assertThat(snapshot.columns)
             .usingRecursiveComparison()
             .isEqualTo(
                 listOf(

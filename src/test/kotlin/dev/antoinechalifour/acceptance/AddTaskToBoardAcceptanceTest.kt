@@ -1,10 +1,7 @@
 package dev.antoinechalifour.acceptance
 
 import dev.antoinechalifour.aBoard
-import dev.antoinechalifour.domain.BoardId
 import dev.antoinechalifour.domain.Boards
-import dev.antoinechalifour.domain.Column
-import dev.antoinechalifour.domain.ColumnId
 import dev.antoinechalifour.save
 import io.ktor.http.*
 import io.ktor.server.testing.*
@@ -13,45 +10,38 @@ import org.junit.jupiter.api.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-internal class AddColumnToBoardAcceptanceTest : KoinTest {
+internal class AddTaskToBoardAcceptanceTest : KoinTest {
     private val boards by inject<Boards>()
 
     @Test
-    internal fun `adds a column to the board`(): Unit = withApplicationModule {
+    internal fun `add a task to the board`(): Unit = withApplicationModule {
         // Arrange
-        boards.save(aBoard().withId("board-1"))
+        boards.save(aBoard().withId("board-2").withColumns("column-1", "column-2"))
         val requestBody = """
             {
-              "id": "column-1",
-              "boardId": "board-1",
-              "name": "My first column"
+                "id": "task-1",
+                "boardId": "board-2",
+                "columnId": "column-1",
+                "content": "some content"
             }
         """.trimIndent()
 
         // Act
         handleRequest {
             method = HttpMethod.Post
-            uri = "/v1/boards/columns"
+            uri = "/v1/boards/tasks"
             addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
             setBody(requestBody)
         }.apply {
             // Assert API response
             val responseBody = """
-                {"id":"board-1","name":"Board name","columns":[{"id":"column-1","name":"My first column","tasks":[]}]}
+                {"id":"board-2","name":"Board name","columns":[{"id":"column-1","name":"Column name","tasks":[{"id":"task-1","content":"some content"}]},{"id":"column-2","name":"Column name","tasks":[]}]}
             """.trimIndent()
             Assertions.assertThat(response.status()).isEqualTo(HttpStatusCode.Created)
             Assertions.assertThat(response.content).isEqualTo(responseBody)
-
-            // Assert application state
-            val board = boards.ofId(BoardId("board-1")).snapshot()
-            Assertions.assertThat(board.columns)
-                .usingRecursiveComparison()
-                .isEqualTo(listOf(Column(
-                    ColumnId("column-1"),
-                    "My first column"
-                )))
         }
     }
 
-    // TODO: test 404 when board is not found
+    // TODO: add task to missing board
+    // TODO: add task to missing column
 }
